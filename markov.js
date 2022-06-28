@@ -1,3 +1,4 @@
+"use strict";
 /** Textual markov chain generator. */
 
 
@@ -27,7 +28,26 @@ class MarkovMachine {
    * */
 
   getChains() {
-    // TODO: implement this!
+    let markovChains = new Map();
+
+    for (let i = 0; i < this.words.length; i++) {
+      if (markovChains.has(this.words[i]) === false) {
+        if (i === this.words.length-1) {
+          markovChains.set(`${this.words[i]}`, [null]);
+        } else {
+        markovChains.set(`${this.words[i]}`, [`${this.words[i+1]}`])
+        }
+      } else {
+        if (i === this.words.length-1) {
+          markovChains.set(`${this.words[i]}`, [null]);
+        } else {
+          let value = markovChains.get(`${this.words[i]}`);
+          value.push(this.words[i]);
+        }
+      }
+    }
+
+    return markovChains;
   }
 
 
@@ -41,4 +61,8 @@ class MarkovMachine {
     // - find a random word from the following-words of that
     // - repeat until reaching the terminal null
   }
+}
+
+module.exports = {
+  MarkovMachine,
 }
