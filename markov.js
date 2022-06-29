@@ -16,7 +16,7 @@ class MarkovMachine {
   /** Get markov chain: returns Map of Markov chains.
    *
    *  For text of "The cat in the hat.", chains will be:
-   * 
+   *
    *  {
    *   "The": ["cat"],
    *   "cat": ["in"],
@@ -24,7 +24,7 @@ class MarkovMachine {
    *   "the": ["hat."],
    *   "hat.": [null],
    *  }
-   * 
+   *
    * */
 
   getChains() {
@@ -38,10 +38,10 @@ class MarkovMachine {
         markovChains.set(`${this.words[i]}`, [`${this.words[i+1]}`])
         }
       } else {
+        let value = markovChains.get(`${this.words[i]}`);
         if (i === this.words.length-1) {
-          markovChains.set(`${this.words[i]}`, [null]);
+          value.push(null);
         } else {
-          let value = markovChains.get(`${this.words[i]}`);
           value.push(this.words[i]);
         }
       }
@@ -60,7 +60,19 @@ class MarkovMachine {
     // - start at the first word in the input text
     // - find a random word from the following-words of that
     // - repeat until reaching the terminal null
+
+    let word = this.words[0]
+    const newStory = [word];
+
+    while (something !== null) {
+
+      let value = markovChains.get(`${this.words[word]}`);
+
+
+    }
+
   }
+
 }
 
 module.exports = {

@@ -21,3 +21,7 @@
         // ex. "The": ["cat"]
 
 map1.set('a', 1);
+
+//set variable to array of input text
+//loop through map
+// we have this.words ...
