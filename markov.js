@@ -1,6 +1,19 @@
 "use strict";
 /** Textual markov chain generator. */
 
+const TEXT = `I am Daniel
+
+I am Sam
+Sam I am
+
+That Sam-I-am
+That Sam-I-am!
+I do not like
+That Sam-I-am
+
+Do you like
+Green eggs and ham`;
+
 
 class MarkovMachine {
 
@@ -61,20 +74,29 @@ class MarkovMachine {
     // - find a random word from the following-words of that
     // - repeat until reaching the terminal null
 
-    let word = this.words[0]
+    let word = this.words[0];
     const newStory = [word];
 
-    while (something !== null) {
+    while (word !== null) {
+      // find value array at a word key
+      const choices = this.chains.get(`${word}`); // [word, cat, The]
 
-      let value = markovChains.get(`${this.words[word]}`);
-
-
+      // randomly choose a new word from that value array
+      const choiceIndex = Math.floor(Math.random() * choices.length);
+      let choice = choices[choiceIndex];
+      if (choice === null) {
+        break;
+      }
+      word = choice;
+      newStory.push(word);
     }
-
+    
+    return newStory;
   }
 
 }
 
 module.exports = {
   MarkovMachine,
+  TEXT,
 }
