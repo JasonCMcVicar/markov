@@ -2,15 +2,12 @@
 /** Textual markov chain generator. */
 
 const TEXT = `I am Daniel
-
 I am Sam
 Sam I am
-
 That Sam-I-am
 That Sam-I-am!
 I do not like
 That Sam-I-am
-
 Do you like
 Green eggs and ham`;
 
@@ -77,6 +74,8 @@ class MarkovMachine {
     let word = this.words[0];
     const newStory = [word];
 
+    // debugger;
+
     while (word !== null) {
       // find value array at a word key
       const choices = this.chains.get(`${word}`); // [word, cat, The]
@@ -84,9 +83,11 @@ class MarkovMachine {
       // randomly choose a new word from that value array
       const choiceIndex = Math.floor(Math.random() * choices.length);
       let choice = choices[choiceIndex];
+      // do we need this?
       if (choice === null) {
         break;
       }
+      console.log("word= ", word, "choice=", choice);
       word = choice;
       newStory.push(word);
     }
