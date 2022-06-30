@@ -38,26 +38,52 @@ class MarkovMachine {
    * */
 
   getChains() {
-    let markovChains = new Map();
+    let markovChain = new Map();
 
     for (let i = 0; i < this.words.length; i++) {
-      if (markovChains.has(this.words[i]) === false) {
-        if (i === this.words.length-1) {
-          markovChains.set(`${this.words[i]}`, [null]);
-        } else {
-        markovChains.set(`${this.words[i]}`, [`${this.words[i+1]}`])
-        }
-      } else {
-        let value = markovChains.get(`${this.words[i]}`);
-        if (i === this.words.length-1) {
+
+      if (markovChain.has(this.words[i])) {
+        value = markovChain.get(`${this.words[i]}`)
+        if (this.words[i+1] === undefined) {
           value.push(null);
-        } else {
-          value.push(this.words[i]);
+          break;
+        }
+        else {
+          value.push(`${this.words[i+1]}`)
+        }
+
+      if (!markovChain.has(this.words[i])) {
+        value = this.words[i+1];
+        if (value === undefined) {
+          markovChain.set(`${this.words[i]}`, [null])
+        }
+        else {
+        markovChain.set(`${this.words[i]}`, `${this.words[i+1]}`)
         }
       }
-    }
 
-    return markovChains;
+    }
+    return markovChain
+
+
+    // for (let i = 0; i < this.words.length; i++) {
+    //   if (markovChains.has(this.words[i]) === false) {
+    //     if (i === this.words.length-1) {
+    //       markovChains.set(`${this.words[i]}`, [null]);
+    //     } else {
+    //     markovChains.set(`${this.words[i]}`, [`${this.words[i+1]}`])
+    //     }
+    //   } else {
+    //     let value = markovChains.get(`${this.words[i]}`);
+    //     if (i === this.words.length-1) {
+    //       value.push(null);
+    //     } else {
+    //       value.push(this.words[i]);
+    //     }
+    //   }
+    // }
+
+    //return markovChains;
   }
 
 
@@ -65,34 +91,34 @@ class MarkovMachine {
    *  until it hits a null choice. */
 
   getText() {
-    // TODO: implement this!
+  //   // TODO: implement this!
 
-    // - start at the first word in the input text
-    // - find a random word from the following-words of that
-    // - repeat until reaching the terminal null
+  //   // - start at the first word in the input text
+  //   // - find a random word from the following-words of that
+  //   // - repeat until reaching the terminal null
 
-    let word = this.words[0];
-    const newStory = [word];
+  //   let word = this.words[0];
+  //   const newStory = [word];
 
-    // debugger;
+  //   // debugger;
 
-    while (word !== null) {
-      // find value array at a word key
-      const choices = this.chains.get(`${word}`); // [word, cat, The]
+  //   while (word !== null) {
+  //     // find value array at a word key
+  //     const choices = this.chains.get(`${word}`); // [word, cat, The]
 
-      // randomly choose a new word from that value array
-      const choiceIndex = Math.floor(Math.random() * choices.length);
-      let choice = choices[choiceIndex];
-      // do we need this?
-      if (choice === null) {
-        break;
-      }
-      console.log("word= ", word, "choice=", choice);
-      word = choice;
-      newStory.push(word);
-    }
-    
-    return newStory;
+  //     // randomly choose a new word from that value array
+  //     const choiceIndex = Math.floor(Math.random() * choices.length);
+  //     let choice = choices[choiceIndex];
+  //     // do we need this?
+  //     if (choice === null) {
+  //       break;
+  //     }
+  //     console.log("word= ", word, "choice=", choice);
+  //     word = choice;
+  //     newStory.push(word);
+  //   }
+
+  //   return newStory;
   }
 
 }
